@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Load and publish the testbed occupancy-grid map."""
 
 import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch_ros.actions import LifecycleNode, Node
+from launch.actions import ExecuteProcess, TimerAction
+from launch_ros.actions import Node
 
 
 def generate_launch_description():
@@ -13,7 +13,7 @@ def generate_launch_description():
     package_share = get_package_share_directory('testbed_bringup')
     map_yaml = os.path.join(package_share, 'maps', 'testbed_world.yaml')
 
-    map_server = LifecycleNode(
+    map_server = Node(
         package='nav2_map_server',
         executable='map_server',
         name='map_server',
@@ -24,16 +24,24 @@ def generate_launch_description():
         }],
     )
 
-    lifecycle_manager = Node(
-        package='nav2_lifecycle_manager',
-        executable='lifecycle_manager',
-        name='map_server_lifecycle_manager',
-        output='screen',
-        parameters=[{
-            'autostart': True,
-            'node_names': ['map_server'],
-            'use_sim_time': True,
-        }],
+    configure_map_server = TimerAction(
+        period=2.0,
+        actions=[ExecuteProcess(
+            cmd=['ros2', 'lifecycle', 'set', '/map_server', 'configure'],
+            output='screen',
+        )],
     )
 
-    return LaunchDescription([map_server, lifecycle_manager])
+    activate_map_server = TimerAction(
+        period=4.0,
+        actions=[ExecuteProcess(
+            cmd=['ros2', 'lifecycle', 'set', '/map_server', 'activate'],
+            output='screen',
+        )],
+    )
+
+    return LaunchDescription([
+        map_server,
+        configure_map_server,
+        activate_map_server,
+    ])
