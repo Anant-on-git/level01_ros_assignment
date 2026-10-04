@@ -22,3 +22,12 @@ CMake Error at CMakeLists.txt:24:
 17.Running the Amcl plugin to test it before making the launch file.
 18.Debugged the run and verified it is running properly, now making the launch file.
 19.Made the launch file so that it build everything from ground up till the amcl implementation.
+20.Successfully tested the launch file.
+21.Looking for what plugins should be used for navigation.
+22.Decided the plugins and writen the params required for them.
+23.Tested navigation before navigation before creating the launch file.
+24.Fixed the error in parameters. But the planner is reporting error it couldnt plan.
+25.The cause of the error narrowed down to being the range of LiDAR in the urdf.
+26.Tested different ranges, and finally settld down to 10. Which makes navigation work successfully.
+27.Creating the launch file.
+28.Noticed that the bringup launch is not able to open rviz2 so I should fix that.
