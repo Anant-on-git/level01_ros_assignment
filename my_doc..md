@@ -17,4 +17,8 @@ CMake Error at CMakeLists.txt:24:
 12.While reading the testbed_world.yaml file found that the location of map is wrong so I added the absolute path of the map. Now I can try loading the map using map_server plugin directly through terminal as per commands given in the documentation first before making the launch file.
 13.map_server plugin is not pre installed, installing it.
 14.Ran into an error, the plugin was looking for the map from where the yaml file was, so absolute path didnt work so added relative path. Map loaded in rviz2 successfully just figured out we always need to configure it using "ros2 lifecycle set /map_server configure" command to transition /map_server topic to /map topic so need to add this action in the launch file.
-15.
+15.Debugged the launch file so it finally loads the map properly and checked it on rviz2.
+16.Reading the AMCL plugin docs to figure out the parameters required to be in the yaml file.
+17.Running the Amcl plugin to test it before making the launch file.
+18.Debugged the run and verified it is running properly, now making the launch file.
+19.Made the launch file so that it build everything from ground up till the amcl implementation.
